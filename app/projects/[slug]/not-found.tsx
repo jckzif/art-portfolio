@@ -1,0 +1,1 @@
+export default function NotFound() { return <main className="page py-32"><h1 className="display text-5xl">Project not found</h1><p className="mt-4 text-stone-600">It may be unpublished or no longer available.</p></main>; }

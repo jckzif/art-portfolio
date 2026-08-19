@@ -1,0 +1,1 @@
+export default function Loading() { return <main className="page grid grid-cols-1 gap-7 py-8 sm:grid-cols-2"><div className="h-72 animate-pulse bg-stone-200" /><div className="h-72 animate-pulse bg-stone-200" /></main>; }

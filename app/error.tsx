@@ -1,0 +1,2 @@
+'use client';
+export default function ErrorPage({ error, reset }: { error: Error; reset: () => void }) { return <main className="page py-32"><h1 className="display text-5xl">Something went wrong</h1><p className="mt-4 text-stone-600">Please try again. If the problem persists, check the connection and configuration.</p><p className="mt-5 break-words border-l-2 border-stone-400 pl-3 font-mono text-sm text-stone-700">{error.message || 'No error message was provided.'}</p><button onClick={reset} className="mt-7 border border-stone-900 px-4 py-2">Try again</button></main>; }

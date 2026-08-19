@@ -1,0 +1,2 @@
+export type ProjectImage = { id: string; project_id: string; storage_path: string; alt_text: string; caption: string | null; sort_order: number; created_at: string; updated_at: string };
+export type Project = { id: string; title: string; slug: string; description: string | null; project_date: string | null; cover_image_id: string | null; published: boolean; created_at: string; updated_at: string; project_images?: ProjectImage[]; cover_image?: ProjectImage | null };
