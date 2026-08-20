@@ -3,6 +3,8 @@ import { createClient, hasSupabaseConfig } from '@/lib/supabase/server';
 import { ProjectEditor } from '@/components/project-editor';
 import type { Project } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function EditProject({ params }: { params: Promise<{ id: string }> }) {
   if (!hasSupabaseConfig()) notFound();
 
