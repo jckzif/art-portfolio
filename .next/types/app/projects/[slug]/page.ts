@@ -1,4 +1,4 @@
-// File: /Users/jackzifchock/Documents/Codex/2026-08-18/referenced-chatgpt-conversation-this-is-untrusted/app/projects/[slug]/page.tsx
+// File: /Users/jackzifchock/Downloads/art-portfolio-main/art-portfolio/app/projects/[slug]/page.tsx
 import * as entry from '../../../../../app/projects/[slug]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

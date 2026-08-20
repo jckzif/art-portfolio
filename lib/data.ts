@@ -3,6 +3,19 @@ import type { Project } from './types';
 
 export { imageUrl } from './images';
 
+export type AboutContent = { id: number; left_text: string; right_text: string; image_path: string | null; updated_at: string };
+
+export async function getAboutContent(): Promise<AboutContent | null> {
+  if (!hasSupabaseConfig()) return null;
+  try {
+    const db = await createClient();
+    const { data } = await db.from('about_content').select('*').eq('id', 1).single();
+    return data as AboutContent | null;
+  } catch {
+    return null;
+  }
+}
+
 export async function getPublishedProjects(): Promise<Project[]> {
   if (!hasSupabaseConfig()) return [];
 

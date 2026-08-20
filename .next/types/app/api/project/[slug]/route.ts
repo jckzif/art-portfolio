@@ -1,4 +1,4 @@
-// File: /Users/jackzifchock/Documents/Codex/2026-08-18/referenced-chatgpt-conversation-this-is-untrusted/app/api/project/[slug]/route.ts
+// File: /Users/jackzifchock/Downloads/art-portfolio-main/art-portfolio/app/api/project/[slug]/route.ts
 import * as entry from '../../../../../../app/api/project/[slug]/route.js'
 import type { NextRequest } from 'next/server.js'
 
