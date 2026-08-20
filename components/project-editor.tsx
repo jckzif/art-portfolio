@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'; import { useRouter } from 
 type Draft = Pick<Project, 'title'|'slug'|'description'|'project_date'|'cover_image_id'|'published'>;
 const empty: Draft = { title: '', slug: '', description: '', project_date: null, cover_image_id: null, published: false };
 export function ProjectEditor({ initial }: { initial?: Project }) { const db = useMemo(createClient, []); const router = useRouter(); const [project, setProject] = useState<Project | null>(initial || null); const [form, setForm] = useState<Draft>(initial ? initial : empty); const [images, setImages] = useState<ProjectImage[]>(initial?.project_images || []); const [saving, setSaving] = useState(false); const [message, setMessage] = useState(''); const [dragged, setDragged] = useState<string | null>(null);
- useEffect(() => { if (!initial) return; db.from('project_images').select('*').eq('project_id', initial.id).order('sort_order').then(({ data }) => setImages((data || []) as ProjectImage[])); }, [db, initial]);
+ useEffect(() => { if (!initial) return; db.from('project_images').select('*').eq('project_id', initial.id).order('sort_order').then(({ data }: { data: ProjectImage[] | null }) => setImages((data || []) as ProjectImage[])); }, [db, initial]);
  const update = <K extends keyof Draft>(key: K, value: Draft[K]) => setForm(f => ({ ...f, [key]: value }));
  async function save() {
 	setSaving(true);
