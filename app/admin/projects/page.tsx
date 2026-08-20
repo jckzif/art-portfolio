@@ -1,3 +1,61 @@
 'use client';
-import Link from 'next/link'; import { useEffect, useState } from 'react'; import { createClient } from '@/lib/supabase/client'; import type { Project } from '@/lib/types';
-export default function Projects() { const [projects, setProjects] = useState<Project[]>([]); const [loading, setLoading] = useState(true); const [error, setError] = useState(''); useEffect(() => { createClient().from('projects').select('*').order('updated_at', { ascending: false }).then(({ data, error }) => { setLoading(false); if (error) setError(error.message); else setProjects(data as Project[]); }); }, []); return <><div className="flex items-center justify-between"><div><h1 className="display text-4xl">Projects</h1><p className="mt-2 text-stone-600">Create and manage your portfolio work.</p></div><Link className="bg-stone-900 px-4 py-3 text-sm text-white no-underline" href="/admin/projects/new">New project</Link></div>{loading ? <p className="py-12">Loading projects…</p> : error ? <p role="alert" className="py-12 text-red-700">Could not load projects: {error}</p> : projects.length === 0 ? <p className="py-16 text-stone-600">No projects yet. Create your first project to begin.</p> : <ul className="mt-10 divide-y divide-stone-300">{projects.map(p => <li key={p.id}><Link href={`/admin/projects/${p.id}`} className="flex items-center justify-between py-5 no-underline"><span><strong className="display text-xl">{p.title}</strong><span className="ml-3 text-sm text-stone-500">/{p.slug}</span></span><span className={p.published ? 'text-sm text-emerald-700' : 'text-sm text-stone-500'}>{p.published ? 'Published' : 'Draft'}</span></Link></li>)}</ul>}</>; }
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import type { Project } from '@/lib/types';
+
+export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    createClient()
+      .from('projects')
+      .select('*')
+      .order('updated_at', { ascending: false })
+      .then(({ data, error }: { data: Project[] | null; error: { message: string } | null }) => {
+        setLoading(false);
+        if (error) setError(error.message);
+        else setProjects((data || []) as Project[]);
+      });
+  }, []);
+
+  return (
+    <>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="display text-4xl">Projects</h1>
+          <p className="mt-2 text-stone-600">Create and manage your portfolio work.</p>
+        </div>
+        <Link className="bg-stone-900 px-4 py-3 text-sm text-white no-underline" href="/admin/projects/new">
+          New project
+        </Link>
+      </div>
+
+      {loading ? (
+        <p className="py-12">Loading projects…</p>
+      ) : error ? (
+        <p role="alert" className="py-12 text-red-700">Could not load projects: {error}</p>
+      ) : projects.length === 0 ? (
+        <p className="py-16 text-stone-600">No projects yet. Create your first project to begin.</p>
+      ) : (
+        <ul className="mt-10 divide-y divide-stone-300">
+          {projects.map((p) => (
+            <li key={p.id}>
+              <Link href={`/admin/projects/${p.id}`} className="flex items-center justify-between py-5 no-underline">
+                <span>
+                  <strong className="display text-xl">{p.title}</strong>
+                  <span className="ml-3 text-sm text-stone-500">/{p.slug}</span>
+                </span>
+                <span className={p.published ? 'text-sm text-emerald-700' : 'text-sm text-stone-500'}>
+                  {p.published ? 'Published' : 'Draft'}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+}
