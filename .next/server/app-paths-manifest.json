@@ -3,13 +3,13 @@
   "/robots.txt/route": "app/robots.txt/route.js",
   "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/api/project/[slug]/route": "app/api/project/[slug]/route.js",
-  "/projects/[slug]/page": "app/projects/[slug]/page.js",
   "/login/page": "app/login/page.js",
+  "/projects/[slug]/page": "app/projects/[slug]/page.js",
   "/about/page": "app/about/page.js",
   "/page": "app/page.js",
   "/admin/page": "app/admin/page.js",
   "/admin/projects/page": "app/admin/projects/page.js",
+  "/admin/projects/[id]/page": "app/admin/projects/[id]/page.js",
   "/admin/projects/new/page": "app/admin/projects/new/page.js",
-  "/admin/about/page": "app/admin/about/page.js",
-  "/admin/projects/[id]/page": "app/admin/projects/[id]/page.js"
+  "/admin/about/page": "app/admin/about/page.js"
 }

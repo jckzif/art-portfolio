@@ -47,7 +47,7 @@ export function SiteHeader() {
 				<nav aria-label="Main navigation" className="flex items-center gap-5">
 					<Link className="no-underline hover:underline" href="/">Work</Link>
 					<Link className="no-underline hover:underline" href="/about">About</Link>
-					<a className="no-underline hover:underline" href="https://jackzif.dev" target="_blank" rel="noopener noreferrer">dev page</a>
+					<a className="no-underline hover:underline" href="https://jackzif.dev">dev page</a>
 					<button onClick={() => setOpen(true)} className="text-red-600 hover:text-red-700 bg-transparent border-0 px-1 py-1">Login</button>
 				</nav>
 			</header>

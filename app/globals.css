@@ -6,7 +6,7 @@
 
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
-body { @apply bg-white text-black antialiased; font-family: 'Jersey 10', Arial, sans-serif; letter-spacing: .015em; }
+body { @apply bg-white text-black antialiased; font-family: 'Jersey 10', Arial, sans-serif; letter-spacing: .015em; text-transform: lowercase; }
 a { @apply underline-offset-4; }
 button, input, textarea { font: inherit; }
 button { @apply cursor-pointer; }
