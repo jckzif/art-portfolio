@@ -3,7 +3,7 @@ import type { Project } from './types';
 
 export { imageUrl } from './images';
 
-export type AboutContent = { id: number; left_text: string; right_text: string; image_path: string | null; updated_at: string };
+export type AboutContent = { id: number; left_text: string; right_text: string; image_path: string | null; favicon_path: string | null; updated_at: string };
 
 export async function getAboutContent(): Promise<AboutContent | null> {
   if (!hasSupabaseConfig()) return null;

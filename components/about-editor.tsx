@@ -4,12 +4,13 @@ import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { allowedImageTypes, maxImageBytes } from '@/lib/utils';
 
-type AboutContent = { id: number; left_text: string; right_text: string; image_path: string | null };
+type AboutContent = { id: number; left_text: string; right_text: string; image_path: string | null; favicon_path: string | null };
 
 export function AboutEditor() {
   const db = createClient();
   const [form, setForm] = useState({ left_text: '', right_text: '' });
   const [imagePath, setImagePath] = useState<string | null>(null);
+  const [faviconPath, setFaviconPath] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ export function AboutEditor() {
         const d = data as AboutContent;
         setForm({ left_text: d.left_text, right_text: d.right_text });
         setImagePath(d.image_path);
+        setFaviconPath(d.favicon_path);
       }
       setLoading(false);
     });
@@ -29,12 +31,12 @@ export function AboutEditor() {
   async function save() {
     setSaving(true);
     setMessage('');
-    const { error } = await db.from('about_content').upsert({ id: 1, ...form, image_path: imagePath });
+    const { error } = await db.from('about_content').upsert({ id: 1, ...form, image_path: imagePath, favicon_path: faviconPath });
     setSaving(false);
     setMessage(error ? `Could not save: ${error.message}` : 'Saved.');
   }
 
-  async function uploadImage(files: FileList | null) {
+  async function uploadImage(files: FileList | null, type: 'photo' | 'favicon' = 'photo') {
     if (!files?.length) return;
     const file = files[0];
     if (!allowedImageTypes.includes(file.type) || file.size > maxImageBytes) {
@@ -42,17 +44,28 @@ export function AboutEditor() {
       return;
     }
     setMessage('Uploading…');
-    if (imagePath) await db.storage.from('artwork').remove([imagePath]);
     const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-    const path = `about/${crypto.randomUUID()}.${ext}`;
-    const { error } = await db.storage.from('artwork').upload(path, file, { contentType: file.type });
-    if (error) { setMessage(`Upload failed: ${error.message}`); return; }
-    setImagePath(path);
-    setMessage('Image uploaded. Click Save to apply.');
+    if (type === 'favicon') {
+      if (faviconPath) await db.storage.from('artwork').remove([faviconPath]);
+      const path = `favicon/${crypto.randomUUID()}.${ext}`;
+      const { error } = await db.storage.from('artwork').upload(path, file, { contentType: file.type });
+      if (error) { setMessage(`Upload failed: ${error.message}`); return; }
+      setFaviconPath(path);
+    } else {
+      if (imagePath) await db.storage.from('artwork').remove([imagePath]);
+      const path = `about/${crypto.randomUUID()}.${ext}`;
+      const { error } = await db.storage.from('artwork').upload(path, file, { contentType: file.type });
+      if (error) { setMessage(`Upload failed: ${error.message}`); return; }
+      setImagePath(path);
+    }
+    setMessage('Uploaded. Click Save to apply.');
   }
 
   const imgUrl = imagePath
     ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/artwork/${imagePath}`
+    : null;
+  const faviconUrl = faviconPath
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/artwork/${faviconPath}`
     : null;
 
   return (
@@ -111,13 +124,23 @@ export function AboutEditor() {
             )}
             <label className="w-fit cursor-pointer border border-stone-300 px-4 py-2 text-sm hover:bg-stone-50">
               {imgUrl ? 'Replace photo' : 'Upload photo'}
-              <input
-                type="file"
-                accept={allowedImageTypes.join(',')}
-                className="sr-only"
-                onChange={e => uploadImage(e.target.files)}
-              />
+              <input type="file" accept={allowedImageTypes.join(',')} className="sr-only" onChange={e => uploadImage(e.target.files, 'photo')} />
             </label>
+
+            <p className="font-medium mt-6">Favicon</p>
+            <p className="text-sm text-stone-500">Replaces the random-color J. Square image recommended (e.g. 64×64 or 512×512 PNG).</p>
+            {faviconUrl && (
+              <img src={faviconUrl} alt="Current favicon" className="h-16 w-16 rounded" />
+            )}
+            <label className="w-fit cursor-pointer border border-stone-300 px-4 py-2 text-sm hover:bg-stone-50">
+              {faviconUrl ? 'Replace favicon' : 'Upload favicon'}
+              <input type="file" accept={allowedImageTypes.join(',')} className="sr-only" onChange={e => uploadImage(e.target.files, 'favicon')} />
+            </label>
+            {faviconUrl && (
+              <button onClick={async () => { if (faviconPath) await db.storage.from('artwork').remove([faviconPath]); setFaviconPath(null); setMessage('Favicon removed. Click Save to apply.'); }} className="w-fit text-sm text-red-700">
+                Remove favicon (revert to random J)
+              </button>
+            )}
           </div>
         </div>
       )}

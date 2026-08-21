@@ -41,12 +41,13 @@ export function SiteHeader() {
 			<header className="page flex items-center justify-between py-5 text-lg">
 				<div className="flex-1 min-w-0">
 					<Link className="text-xl leading-none no-underline block whitespace-nowrap truncate" href="/">
-						Jack&apos;s Portfolio <span className="text-zinc-500">/ {section}{pageTitle ? ` / ${pageTitle}` : ''}{pageDesc ? ` / ${pageDesc}` : ''}</span>
+						jacks art portfolio <span className="text-zinc-500">/ {section}{pageTitle ? ` / ${pageTitle}` : ''}{pageDesc ? ` / ${pageDesc}` : ''}</span>
 					</Link>
 				</div>
 				<nav aria-label="Main navigation" className="flex items-center gap-5">
 					<Link className="no-underline hover:underline" href="/">Work</Link>
 					<Link className="no-underline hover:underline" href="/about">About</Link>
+					<a className="no-underline hover:underline" href="https://jackzif.dev" target="_blank" rel="noopener noreferrer">dev page</a>
 					<button onClick={() => setOpen(true)} className="text-red-600 hover:text-red-700 bg-transparent border-0 px-1 py-1">Login</button>
 				</nav>
 			</header>
