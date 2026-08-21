@@ -5,7 +5,6 @@ import { getAboutContent } from '@/lib/data';
 export const metadata: Metadata = { title: 'About' };
 export const dynamic = 'force-dynamic';
 
-// converts [text](url) markdown links to anchor tags
 function renderText(text: string) {
   const parts = text.split(/(\[[^\]]+\]\(https?:\/\/[^)]+\))/g);
   return parts.map((part, i) => {
@@ -17,41 +16,39 @@ function renderText(text: string) {
 
 export default async function About() {
   const about = await getAboutContent();
+  const hasImage = !!about?.image_path;
+  const imgSrc = hasImage
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/artwork/${about!.image_path}`
+    : null;
 
   return (
-    <main className="page py-16">
+    <main className="page py-16 max-w-5xl">
       <h1 className="display text-5xl mb-12">About</h1>
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
-        {about?.image_path && (
-          <div className="relative aspect-[3/4] w-full overflow-hidden bg-stone-100 lg:col-span-1">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/artwork/${about.image_path}`}
-              alt="About"
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 33vw, 100vw"
-            />
+
+      {hasImage ? (
+        <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
+          <div className="relative w-full lg:w-72 shrink-0 aspect-[3/4] overflow-hidden bg-stone-100">
+            <Image src={imgSrc!} alt="About" fill className="object-cover" sizes="(min-width: 1024px) 288px, 100vw" />
           </div>
-        )}
-        <div className={`flex flex-col gap-8 lg:col-span-${about?.image_path ? '2' : '3'}`}>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-            {(about?.left_text || !about) && (
-              <div className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
-                {about?.left_text
-                  ? renderText(about.left_text)
-                  : 'Artist statement goes here. You can add links like [example](https://example.com).'}
-              </div>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 flex-1">
+            {about?.left_text && (
+              <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">{renderText(about.left_text)}</p>
             )}
-            {(about?.right_text || !about) && (
-              <div className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
-                {about?.right_text
-                  ? renderText(about.right_text)
-                  : 'Contact and additional information goes here.'}
-              </div>
+            {about?.right_text && (
+              <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">{renderText(about.right_text)}</p>
             )}
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 max-w-4xl">
+          <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
+            {about?.left_text ? renderText(about.left_text) : 'Artist statement goes here. Add links like [example](https://example.com).'}
+          </p>
+          <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
+            {about?.right_text ? renderText(about.right_text) : 'Contact and additional information goes here.'}
+          </p>
+        </div>
+      )}
     </main>
   );
 }
