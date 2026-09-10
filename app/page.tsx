@@ -15,12 +15,6 @@ export default async function Home() {
   return (
     <main className="page portfolio-screen flex flex-col">
       <h1 className="sr-only">Jack&apos;s Portfolio — Work</h1>
-      <div className="border-b border-stone-300 bg-stone-50 py-3 text-xs text-stone-500">
-        <div className="page flex items-center justify-between gap-4">
-          <span>{totalImages} piece{totalImages !== 1 ? 's' : ''}</span>
-          <span>{visitCount} visit{visitCount !== 1 ? 's' : ''}</span>
-        </div>
-      </div>
       {notebook && (
         <div className="border-b border-stone-300 bg-white">
           <div className="page flex items-center py-4">
@@ -63,6 +57,12 @@ export default async function Home() {
           })}
         </div>
       )}
+      <div className="border-t border-stone-300 bg-stone-50 py-3 text-xs text-stone-500 mt-12">
+        <div className="page flex items-center justify-between gap-4">
+          <span>{totalImages} piece{totalImages !== 1 ? 's' : ''}</span>
+          <span>{visitCount} visit{visitCount !== 1 ? 's' : ''}</span>
+        </div>
+      </div>
     </main>
   );
 }

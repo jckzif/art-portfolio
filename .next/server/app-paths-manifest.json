@@ -1,10 +1,10 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/project/[slug]/route": "app/api/project/[slug]/route.js",
   "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/robots.txt/route": "app/robots.txt/route.js",
-  "/api/project/[slug]/route": "app/api/project/[slug]/route.js",
-  "/login/page": "app/login/page.js",
   "/projects/[slug]/page": "app/projects/[slug]/page.js",
+  "/login/page": "app/login/page.js",
   "/page": "app/page.js",
   "/about/page": "app/about/page.js",
   "/admin/page": "app/admin/page.js",
