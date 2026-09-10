@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <main className="page portfolio-screen relative">
       <h1 className="sr-only">Jack&apos;s Portfolio — Work</h1>
-      <div className="fixed right-2 bottom-2 z-50 pointer-events-auto text-xs text-stone-500 flex gap-4">
+      <div className="fixed right-3 sm:right-5 lg:right-8 bottom-3 sm:bottom-5 lg:bottom-8 z-50 pointer-events-auto text-xs text-stone-500 flex gap-4">
         <div>{totalImages} piece{totalImages !== 1 ? 's' : ''}</div>
         <div>{visitCount} visit{visitCount !== 1 ? 's' : ''}</div>
       </div>
