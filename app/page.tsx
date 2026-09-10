@@ -1,12 +1,26 @@
-import Image from 'next/image'; import Link from 'next/link'; import { getPublishedProjects, imageUrl } from '@/lib/data'; import { formatProjectDate } from '@/lib/utils';
+import Image from 'next/image';
+import Link from 'next/link';
+import { getPublishedProjects, imageUrl, getAndIncrementVisitCount, getTotalImageCount } from '@/lib/data';
+import { formatProjectDate } from '@/lib/utils';
+
 export const revalidate = 60;
+
 export default async function Home() {
   const projects = await getPublishedProjects();
   const notebook = projects.find(p => p.is_notebook);
   const regularProjects = projects.filter(p => !p.is_notebook);
+  const visitCount = await getAndIncrementVisitCount();
+  const totalImages = await getTotalImageCount();
+
   return (
     <main className="page portfolio-screen flex flex-col">
       <h1 className="sr-only">Jack&apos;s Portfolio — Work</h1>
+      <div className="border-b border-stone-300 bg-stone-50 py-3 text-xs text-stone-500">
+        <div className="page flex items-center justify-between gap-4">
+          <span>{totalImages} piece{totalImages !== 1 ? 's' : ''}</span>
+          <span>{visitCount} visit{visitCount !== 1 ? 's' : ''}</span>
+        </div>
+      </div>
       {notebook && (
         <div className="border-b border-stone-300 bg-white">
           <div className="page flex items-center py-4">

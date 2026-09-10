@@ -54,3 +54,40 @@ export async function getPublishedProject(slug: string): Promise<Project | null>
     return null;
   }
 }
+
+export async function getAndIncrementVisitCount(): Promise<number> {
+  if (!hasSupabaseConfig()) return 0;
+
+  try {
+    const db = await createClient();
+    const { data, error } = await db.rpc('increment_visit_count');
+
+    if (error) {
+      console.error('Failed to increment visit count:', error);
+      // Fall back to just reading the current count
+      const { data: stats } = await db
+        .from('visit_stats')
+        .select('visit_count')
+        .eq('id', 1)
+        .single();
+      return (stats as { visit_count: number })?.visit_count || 0;
+    }
+    return data as number;
+  } catch (e) {
+    console.error('Visit count error:', e);
+    return 0;
+  }
+}
+
+export async function getTotalImageCount(): Promise<number> {
+  if (!hasSupabaseConfig()) return 0;
+
+  try {
+    const db = await createClient();
+    const projects = await getPublishedProjects();
+    const total = projects.reduce((sum, p) => sum + (p.project_images?.length || 0), 0);
+    return total;
+  } catch {
+    return 0;
+  }
+}
