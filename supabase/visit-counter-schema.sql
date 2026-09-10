@@ -9,10 +9,16 @@ insert into public.visit_stats (id, visit_count) values (1, 0) on conflict do no
 
 -- Allow public reads and updates via function
 alter table public.visit_stats enable row level security;
+
+-- Drop existing policies if they exist and recreate
+drop policy if exists "Anyone can read visit stats" on public.visit_stats;
+drop policy if exists "Anyone can update visit stats" on public.visit_stats;
+
 create policy "Anyone can read visit stats" on public.visit_stats for select using (true);
 create policy "Anyone can update visit stats" on public.visit_stats for update using (true);
 
 -- Create a function to increment visit count (security definer so it works with anon key)
+drop function if exists increment_visit_count();
 create or replace function increment_visit_count()
 returns bigint
 language sql
