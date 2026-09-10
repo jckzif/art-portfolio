@@ -1,15 +1,15 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/project/[slug]/route": "app/api/project/[slug]/route.js",
-  "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/robots.txt/route": "app/robots.txt/route.js",
-  "/projects/[slug]/page": "app/projects/[slug]/page.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/api/project/[slug]/route": "app/api/project/[slug]/route.js",
   "/login/page": "app/login/page.js",
+  "/projects/[slug]/page": "app/projects/[slug]/page.js",
   "/page": "app/page.js",
   "/about/page": "app/about/page.js",
   "/admin/page": "app/admin/page.js",
   "/admin/projects/page": "app/admin/projects/page.js",
+  "/admin/about/page": "app/admin/about/page.js",
   "/admin/projects/new/page": "app/admin/projects/new/page.js",
-  "/admin/projects/[id]/page": "app/admin/projects/[id]/page.js",
-  "/admin/about/page": "app/admin/about/page.js"
+  "/admin/projects/[id]/page": "app/admin/projects/[id]/page.js"
 }

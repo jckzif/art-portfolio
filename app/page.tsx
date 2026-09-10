@@ -13,8 +13,12 @@ export default async function Home() {
   const totalImages = await getTotalImageCount();
 
   return (
-    <main className="page portfolio-screen flex flex-col">
+    <main className="page portfolio-screen relative">
       <h1 className="sr-only">Jack&apos;s Portfolio — Work</h1>
+      <div className="fixed right-2 bottom-4 z-50 pointer-events-auto text-xs text-stone-500 leading-relaxed">
+        <div>{totalImages} piece{totalImages !== 1 ? 's' : ''}</div>
+        <div>{visitCount} visit{visitCount !== 1 ? 's' : ''}</div>
+      </div>
       {notebook && (
         <div className="border-b border-stone-300 bg-white">
           <div className="page flex items-center py-4">
@@ -57,12 +61,6 @@ export default async function Home() {
           })}
         </div>
       )}
-      <div className="border-t border-stone-300 bg-stone-50 py-3 text-xs text-stone-500 mt-12">
-        <div className="page flex items-center justify-between gap-4">
-          <span>{totalImages} piece{totalImages !== 1 ? 's' : ''}</span>
-          <span>{visitCount} visit{visitCount !== 1 ? 's' : ''}</span>
-        </div>
-      </div>
     </main>
   );
 }
