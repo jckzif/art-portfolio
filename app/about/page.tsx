@@ -22,29 +22,29 @@ export default async function About() {
     : null;
 
   return (
-    <main className="page py-16 max-w-5xl">
-      <h1 className="display text-5xl mb-12">About</h1>
+    <main className="page py-8 sm:py-16 max-w-5xl">
+      <h1 className="display text-3xl sm:text-5xl mb-8 sm:mb-12">About</h1>
 
       {hasImage ? (
-        <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
-          <div className="relative w-full lg:w-72 shrink-0 aspect-[3/4] overflow-hidden bg-stone-100">
-            <Image src={imgSrc!} alt="About" fill className="object-cover" sizes="(min-width: 1024px) 288px, 100vw" />
+        <div className="flex flex-col gap-6 sm:gap-10 lg:flex-row lg:gap-16">
+          <div className="relative w-full sm:w-96 lg:w-72 shrink-0 aspect-[3/4] overflow-hidden bg-stone-100">
+            <Image src={imgSrc!} alt="About" fill className="object-cover" sizes="(min-width: 1024px) 288px, (min-width: 640px) 384px, 100vw" />
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 flex-1">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 flex-1">
             {about?.left_text && (
-              <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">{renderText(about.left_text)}</p>
+              <p className="text-base sm:text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">{renderText(about.left_text)}</p>
             )}
             {about?.right_text && (
-              <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">{renderText(about.right_text)}</p>
+              <p className="text-base sm:text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">{renderText(about.right_text)}</p>
             )}
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 max-w-4xl">
-          <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 max-w-4xl">
+          <p className="text-base sm:text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
             {about?.left_text ? renderText(about.left_text) : 'Artist statement goes here. Add links like [example](https://example.com).'}
           </p>
-          <p className="text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
+          <p className="text-base sm:text-lg leading-relaxed text-stone-700 whitespace-pre-wrap">
             {about?.right_text ? renderText(about.right_text) : 'Contact and additional information goes here.'}
           </p>
         </div>

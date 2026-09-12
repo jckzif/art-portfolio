@@ -38,9 +38,9 @@ export function SiteHeader() {
 
 	return (
 		<>
-			<header className="page flex items-center justify-between py-5 text-lg">
+			<header className="page flex items-center justify-between py-3 sm:py-5 text-sm sm:text-lg">
 				<div className="flex-1 min-w-0 mr-4">
-					<Link className="text-xl leading-none no-underline block whitespace-nowrap truncate" href="/">
+					<Link className="text-lg sm:text-xl leading-none no-underline block whitespace-nowrap truncate" href="/">
 						jacks art portfolio <span className="text-zinc-500 hidden sm:inline">/ {section}{pageTitle ? ` / ${pageTitle}` : ''}{pageDesc ? ` / ${pageDesc}` : ''}</span>
 					</Link>
 				</div>

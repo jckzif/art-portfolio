@@ -15,26 +15,26 @@ export default async function Home() {
   return (
     <main className="page portfolio-screen relative">
       <h1 className="sr-only">Jack&apos;s Portfolio — Work</h1>
-      <div className="fixed right-3 sm:right-5 lg:right-8 bottom-3 sm:bottom-5 lg:bottom-8 z-50 pointer-events-auto text-xs text-stone-500 flex gap-4">
+      <div className="fixed right-2 sm:right-3 lg:right-5 bottom-2 sm:bottom-3 lg:bottom-5 z-50 pointer-events-auto text-xs text-stone-500 flex gap-3 sm:gap-4">
         <div>{totalImages} piece{totalImages !== 1 ? 's' : ''}</div>
         <div>{visitCount} visit{visitCount !== 1 ? 's' : ''}</div>
       </div>
       {notebook && (
         <div className="border-b border-stone-300 bg-white">
-          <div className="page flex items-center py-4">
-            <Link href={`/projects/${notebook.slug}`} className="text-lg font-medium no-underline hover:underline">
+          <div className="page flex items-center py-2 sm:py-4">
+            <Link href={`/projects/${notebook.slug}`} className="text-base sm:text-lg font-medium no-underline hover:underline">
               {notebook.title}
             </Link>
           </div>
         </div>
       )}
       {regularProjects.length === 0 ? (
-        <div className="py-20">
-          <p className="text-3xl">No published work yet.</p>
-          <p className="mt-2 text-lg">Your published projects will appear here.</p>
+        <div className="py-10 sm:py-20">
+          <p className="text-2xl sm:text-3xl">No published work yet.</p>
+          <p className="mt-2 text-base sm:text-lg">Your published projects will appear here.</p>
         </div>
       ) : (
-        <div className="grid max-w-6xl grid-cols-2 gap-x-5 gap-y-10 pt-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid max-w-6xl grid-cols-2 gap-x-2 gap-y-4 sm:gap-x-5 sm:gap-y-10 pt-4 sm:pt-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {regularProjects.map((project) => {
             const cover = project.project_images?.find(i => i.id === project.cover_image_id) || project.project_images?.[0];
             return (

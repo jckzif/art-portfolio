@@ -31,7 +31,7 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
   return (
     <section aria-label="Artwork viewer" className="mt-4">
       <div
-        className="relative flex h-[calc(100dvh-260px)] min-h-[280px] items-center justify-center bg-white pt-12"
+        className="relative flex h-[calc(100dvh-200px)] sm:h-[calc(100dvh-260px)] min-h-[280px] items-center justify-center bg-white pt-6 sm:pt-12"
         onTouchStart={e => (start = e.changedTouches[0].screenX)}
         onTouchEnd={e => {
           const d = e.changedTouches[0].screenX - start;
@@ -80,13 +80,13 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
       </div>
 
       {/* caption bottom-left */}
-      <div className="fixed left-2 bottom-4 z-50 pointer-events-auto max-w-[60vw]">
-        <p className="text-sm leading-relaxed text-neutral-800 bg-white/80 backdrop-blur-sm rounded px-2 py-1">{image.caption || 'No image description has been added.'}</p>
+      <div className="fixed left-2 sm:left-4 bottom-2 sm:bottom-4 z-50 pointer-events-auto max-w-[55vw] sm:max-w-[60vw]">
+        <p className="text-xs sm:text-sm leading-relaxed text-neutral-800 bg-white/80 backdrop-blur-sm rounded px-2 py-1">{image.caption || 'No image description has been added.'}</p>
       </div>
       {/* counter bottom-right */}
       {images.length > 1 && (
-        <div className="fixed right-2 bottom-4 z-50 pointer-events-auto">
-          <div className="text-sm text-neutral-600 bg-white/80 rounded px-2 py-1">{`${index + 1} / ${images.length}`}</div>
+        <div className="fixed right-2 sm:right-4 bottom-2 sm:bottom-4 z-50 pointer-events-auto">
+          <div className="text-xs sm:text-sm text-neutral-600 bg-white/80 rounded px-2 py-1">{`${index + 1} / ${images.length}`}</div>
         </div>
       )}
     </section>
