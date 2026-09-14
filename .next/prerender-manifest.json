@@ -109,7 +109,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/login": {
+    "/admin/projects": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -122,8 +122,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/login",
-      "dataRoute": "/login.rsc",
+      "srcRoute": "/admin/projects",
+      "dataRoute": "/admin/projects.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -157,7 +157,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/admin/projects": {
+    "/login": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -170,8 +170,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/admin/projects",
-      "dataRoute": "/admin/projects.rsc",
+      "srcRoute": "/login",
+      "dataRoute": "/login.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",

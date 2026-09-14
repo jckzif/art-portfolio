@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPublishedProject, imageUrl } from '@/lib/data';
-import { formatProjectDate } from '@/lib/utils';
 import { ProjectViewer } from '@/components/project-viewer';
-import { ProjectInfoButton } from '@/components/project-info-button';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const p = await getPublishedProject((await params).slug);
@@ -34,7 +32,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 	const project = await getPublishedProject((await params).slug);
 	if (!project) notFound();
 
-	const date = formatProjectDate(project.project_date);
 	const jsonLd = {
 		'@context': 'https://schema.org',
 		'@type': 'CreativeWork',
@@ -53,18 +50,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
-			<div className="flex items-center gap-1 py-4 sm:py-6 border-b border-stone-200">
-				<h1 className="text-xl sm:text-2xl">{project.title}</h1>
-				<span className="text-stone-400">/</span>
-				<span className="text-sm sm:text-base text-stone-600">{date}</span>
-				{project.description && (
-					<ProjectInfoButton
-						title={project.title}
-						date={date}
-						description={project.description}
-					/>
-				)}
-			</div>
 			<ProjectViewer images={project.project_images || []} title={project.title} />
 		</main>
 	);
