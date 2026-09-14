@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <main className="page portfolio-screen relative">
       <h1 className="sr-only">Jack&apos;s Portfolio — Work</h1>
-      <div className="fixed right-2 sm:right-3 lg:right-5 bottom-2 sm:bottom-3 lg:bottom-5 z-50 pointer-events-auto text-xs text-stone-500 flex gap-3 sm:gap-4">
+      <div className="fixed right-2 sm:right-3 lg:right-5 bottom-2 sm:bottom-3 lg:bottom-5 z-50 pointer-events-auto text-xs text-stone-500 flex gap-3 sm:gap-4 bg-white/80 sm:bg-transparent px-2 sm:px-0 py-1 sm:py-0 rounded sm:rounded-none">
         <div>{totalImages} piece{totalImages !== 1 ? 's' : ''}</div>
         <div>{visitCount} visit{visitCount !== 1 ? 's' : ''}</div>
       </div>
@@ -39,7 +39,7 @@ export default async function Home() {
             const cover = project.project_images?.find(i => i.id === project.cover_image_id) || project.project_images?.[0];
             return (
               <Link key={project.id} href={`/projects/${project.slug}`} className="group block no-underline">
-                <div className="relative aspect-[4/3] overflow-hidden bg-white">
+                <div className="relative aspect-video overflow-hidden bg-white">
                   {cover ? (
                     <Image
                       src={imageUrl(cover.storage_path)}

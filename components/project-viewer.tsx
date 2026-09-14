@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProjectImage } from "@/lib/types";
 import { imageUrl } from "@/lib/images";
 
@@ -9,6 +9,7 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
   const [lightbox, setLightbox] = useState(false);
   const [offset, setOffset] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const startRef = useRef(0);
 
   const move = useCallback(
     (delta: number) => {
@@ -30,24 +31,39 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
     return () => window.removeEventListener("keydown", key);
   }, [move]);
 
+  useEffect(() => {
+    const preloadImages = () => {
+      images.forEach(img => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = imageUrl(img.storage_path);
+        document.head.appendChild(link);
+      });
+    };
+    preloadImages();
+  }, [images]);
+
   if (!images.length) return <p className="py-24">This project has no artwork yet.</p>;
 
   const image = images[index];
-  let start = 0;
 
   return (
     <section aria-label="Artwork viewer" className="mt-4">
       <div
         className="relative flex h-[calc(100dvh-160px)] sm:h-[calc(100dvh-220px)] min-h-[240px] items-center justify-center bg-white pt-3 sm:pt-8 overflow-hidden"
-        onTouchStart={e => (start = e.changedTouches[0].screenX)}
+        onTouchStart={e => {
+          startRef.current = e.changedTouches[0].screenX;
+          setOffset(0);
+        }}
         onTouchMove={e => {
           if (!isTransitioning) {
-            const d = e.changedTouches[0].screenX - start;
+            const d = e.changedTouches[0].screenX - startRef.current;
             setOffset(d);
           }
         }}
         onTouchEnd={e => {
-          const d = e.changedTouches[0].screenX - start;
+          const d = e.changedTouches[0].screenX - startRef.current;
           if (Math.abs(d) > 45) move(d > 0 ? -1 : 1);
           else setOffset(0);
         }}

@@ -13,7 +13,8 @@ button { @apply cursor-pointer; }
 :focus-visible { @apply outline outline-2 outline-offset-4 outline-black; }
 .display { font-family: 'Jersey 10', Arial, sans-serif; letter-spacing: .015em; }
 .page { @apply mx-auto w-full max-w-[1680px] px-4 sm:px-7 lg:px-10; }
-.portfolio-screen { height: calc(100dvh - 72px); overflow: hidden; }
-body:has(.portfolio-screen) { overflow: hidden; }
+.portfolio-screen { overflow: auto; }
+@media (max-width: 639px) { body:has(.portfolio-screen) { overflow: auto; } }
+@media (min-width: 640px) { .portfolio-screen { height: calc(100dvh - 72px); overflow: hidden; } }
 input:not([type='checkbox']):not([type='radio']), textarea { @apply rounded-none border-black bg-white text-black; }
 @media (prefers-reduced-motion: no-preference) { .gentle { transition: opacity .2s ease, transform .2s ease; } }
