@@ -3,6 +3,12 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { LoginDialog } from './login-dialog';
+import { ProjectInfoButton } from './project-info-button';
+
+function formatProjectDate(date: string | null) {
+	if (!date) return '';
+	return new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long' }).format(new Date(`${date}T12:00:00`));
+}
 
 export function SiteHeader() {
 	const params = useSearchParams();
@@ -11,6 +17,7 @@ export function SiteHeader() {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [pageTitle, setPageTitle] = useState('');
 	const [pageDesc, setPageDesc] = useState('');
+	const [pageDate, setPageDate] = useState('');
 
 	const section = pathname === '/about' ? 'About' : 'Work';
 
@@ -29,6 +36,7 @@ export function SiteHeader() {
 						const data = await res.json();
 						setPageTitle(data.title || '');
 						setPageDesc(data.description || '');
+						setPageDate(data.project_date || '');
 						return;
 					}
 				} catch (e) {
@@ -37,6 +45,7 @@ export function SiteHeader() {
 			}
 			setPageTitle('');
 			setPageDesc('');
+			setPageDate('');
 		}
 		load();
 	}, [pathname]);
@@ -46,8 +55,17 @@ export function SiteHeader() {
 			<header className="page flex items-center justify-between py-3 sm:py-5 text-sm sm:text-lg">
 				<div className="flex-1 min-w-0 mr-4">
 					<Link className="text-lg sm:text-xl leading-none no-underline block whitespace-nowrap truncate" href="/">
-						jacks art portfolio <span className="text-zinc-500 hidden sm:inline">/ {section}{pageTitle ? ` / ${pageTitle}` : ''}{pageDesc ? ` / ${pageDesc}` : ''}</span>
+						jacks art portfolio <span className="text-zinc-500 hidden sm:inline">/ {section}{pageTitle ? ` / ${pageTitle}` : ''}</span>
 					</Link>
+					{pageTitle && pageDesc && (
+						<div className="hidden sm:flex items-center gap-1 mt-1">
+							<ProjectInfoButton
+								title={pageTitle}
+								date={formatProjectDate(pageDate)}
+								description={pageDesc}
+							/>
+						</div>
+					)}
 				</div>
 				<nav aria-label="Main navigation" className="flex items-center gap-4 shrink-0">
 					<Link className="no-underline hover:underline hidden sm:inline" href="/">Work</Link>

@@ -8,5 +8,5 @@ export async function GET(
   const { slug } = await params;
   const project = await getPublishedProject(slug);
   if (!project) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  return NextResponse.json({ title: project.title, description: project.description || '' });
+  return NextResponse.json({ title: project.title, description: project.description || '', project_date: project.project_date });
 }
