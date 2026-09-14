@@ -1,8 +1,21 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { getAboutContent } from '@/lib/data';
+import { getAboutContent, imageUrl } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'About' };
+export const metadata: Metadata = {
+  title: 'About',
+  description: 'Learn more about Jack and his digital art practice.',
+  openGraph: {
+    title: 'About Jack',
+    description: 'Learn more about Jack and his digital art practice.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'About Jack',
+    description: 'Learn more about Jack and his digital art practice.',
+  },
+};
 export const dynamic = 'force-dynamic';
 
 function renderText(text: string) {
@@ -21,8 +34,22 @@ export default async function About() {
     ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/artwork/${about!.image_path}`
     : null;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Jack',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://jackzif.art',
+    jobTitle: 'Digital Artist',
+    description: about?.left_text || 'Digital artist',
+    ...(hasImage && { image: imgSrc }),
+  };
+
   return (
     <main className="page py-8 sm:py-16 max-w-5xl">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="display text-3xl sm:text-5xl mb-8 sm:mb-12">About</h1>
 
       {hasImage ? (

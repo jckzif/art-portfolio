@@ -12,8 +12,21 @@ export default async function Home() {
   const visitCount = await getAndIncrementVisitCount();
   const totalImages = await getTotalImageCount();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Jack',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://jackzif.art',
+    jobTitle: 'Digital Artist',
+    description: "Jack's digital art portfolio showcasing digital artwork.",
+  };
+
   return (
     <main className="page portfolio-screen relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="sr-only">Jack&apos;s Portfolio — Work</h1>
       <div className="fixed right-2 sm:right-3 lg:right-5 bottom-2 sm:bottom-3 lg:bottom-5 z-50 pointer-events-auto text-xs text-stone-500 flex gap-3 sm:gap-4 bg-white/80 sm:bg-transparent px-2 sm:px-0 py-1 sm:py-0 rounded sm:rounded-none">
         <div>{totalImages} piece{totalImages !== 1 ? 's' : ''}</div>

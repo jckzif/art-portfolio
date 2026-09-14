@@ -4,7 +4,24 @@ function siteUrl() {
   // ensure the value always has a scheme so new URL() doesn't throw
   return raw.startsWith('http') ? raw : `https://${raw}`;
 }
-export const metadata: Metadata = { title: { default: 'jacks art portfolio', template: '%s — jacks art portfolio' }, description: "Jack's digital art portfolio.", metadataBase: new URL(siteUrl()) };
+export const metadata: Metadata = {
+  title: { default: 'jacks art portfolio', template: '%s — jacks art portfolio' },
+  description: "Jack's digital art portfolio showcasing digital artwork.",
+  metadataBase: new URL(siteUrl()),
+  openGraph: {
+    title: "Jack's Art Portfolio",
+    description: "Digital art portfolio and artwork showcase.",
+    type: 'website',
+    locale: 'en_US',
+    url: siteUrl(),
+  },
+  twitter: {
+    card: 'summary',
+    title: "Jack's Art Portfolio",
+    description: "Digital art portfolio and artwork showcase.",
+  },
+  robots: 'index, follow',
+};
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const about = await getAboutContent();
   const faviconUrl = about?.favicon_path
