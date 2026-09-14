@@ -7,9 +7,16 @@ import { imageUrl } from "@/lib/images";
 export function ProjectViewer({ images, title }: { images: ProjectImage[]; title: string }) {
   const [index, setIndex] = useState(0);
   const [lightbox, setLightbox] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const move = useCallback(
-    (delta: number) => setIndex(i => (i + delta + images.length) % images.length),
+    (delta: number) => {
+      setIsTransitioning(true);
+      setIndex(i => (i + delta + images.length) % images.length);
+      setOffset(0);
+      setTimeout(() => setIsTransitioning(false), 300);
+    },
     [images.length]
   );
 
@@ -31,11 +38,18 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
   return (
     <section aria-label="Artwork viewer" className="mt-4">
       <div
-        className="relative flex h-[calc(100dvh-200px)] sm:h-[calc(100dvh-260px)] min-h-[280px] items-center justify-center bg-white pt-6 sm:pt-12"
+        className="relative flex h-[calc(100dvh-160px)] sm:h-[calc(100dvh-220px)] min-h-[240px] items-center justify-center bg-white pt-3 sm:pt-8 overflow-hidden"
         onTouchStart={e => (start = e.changedTouches[0].screenX)}
+        onTouchMove={e => {
+          if (!isTransitioning) {
+            const d = e.changedTouches[0].screenX - start;
+            setOffset(d);
+          }
+        }}
         onTouchEnd={e => {
           const d = e.changedTouches[0].screenX - start;
           if (Math.abs(d) > 45) move(d > 0 ? -1 : 1);
+          else setOffset(0);
         }}
       >
         <button
@@ -48,13 +62,15 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
           </svg>
         </button>
 
-        <div className="relative w-full h-full flex items-center justify-center">
+        <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
           <button
             aria-label="Open fullscreen artwork"
             onClick={() => setLightbox(true)}
             className="relative w-full h-full flex items-center justify-center cursor-zoom-in"
           >
-            <div className="relative max-w-[90vw] max-h-full w-full h-full flex items-center justify-center">
+            <div className={`relative max-w-[90vw] max-h-full w-full h-full flex items-center justify-center ${
+              isTransitioning ? "transition-all duration-300 ease-out" : ""
+            }`} style={{ transform: `translateX(${offset}px)` }}>
               <Image
                 src={imageUrl(image.storage_path)}
                 alt={image.alt_text || title}
@@ -63,7 +79,6 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
                 sizes="100vw"
                 className="object-contain object-center max-h-full max-w-full"
               />
-              {/* overlays removed — caption and counter will render below the viewer */}
             </div>
           </button>
         </div>

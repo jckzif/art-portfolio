@@ -34,7 +34,7 @@ export default async function Home() {
           <p className="mt-2 text-base sm:text-lg">Your published projects will appear here.</p>
         </div>
       ) : (
-        <div className="grid max-w-6xl grid-cols-2 gap-x-2 gap-y-4 sm:gap-x-5 sm:gap-y-10 pt-4 sm:pt-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid max-w-6xl grid-cols-1 gap-x-2 gap-y-4 sm:gap-x-5 sm:gap-y-10 pt-4 sm:pt-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {regularProjects.map((project) => {
             const cover = project.project_images?.find(i => i.id === project.cover_image_id) || project.project_images?.[0];
             return (

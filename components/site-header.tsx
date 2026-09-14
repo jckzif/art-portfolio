@@ -8,10 +8,15 @@ export function SiteHeader() {
 	const params = useSearchParams();
 	const pathname = usePathname();
 	const [open, setOpen] = useState(params.get('login') === '1');
+	const [menuOpen, setMenuOpen] = useState(false);
 	const [pageTitle, setPageTitle] = useState('');
 	const [pageDesc, setPageDesc] = useState('');
 
 	const section = pathname === '/about' ? 'About' : 'Work';
+
+	useEffect(() => {
+		if (menuOpen) setMenuOpen(false);
+	}, [pathname]);
 
 	useEffect(() => {
 		async function load() {
@@ -48,15 +53,24 @@ export function SiteHeader() {
 					<Link className="no-underline hover:underline hidden sm:inline" href="/">Work</Link>
 					<Link className="no-underline hover:underline hidden sm:inline" href="/about">About</Link>
 					<a className="no-underline hover:underline hidden sm:inline" href="https://jackzif.dev">dev page</a>
-					<button onClick={() => setOpen(true)} className="text-red-600 hover:text-red-700 bg-transparent border-0 px-1 py-1" style={{textTransform:'uppercase'}}>LOGIN</button>
+					<button onClick={() => setOpen(true)} className="text-red-600 hover:text-red-700 bg-transparent border-0 px-1 py-1 hidden sm:block" style={{textTransform:'uppercase'}}>LOGIN</button>
+					{/* Mobile menu button */}
+					<button onClick={() => setMenuOpen(!menuOpen)} className="sm:hidden text-black bg-transparent border-0 p-2" aria-label="Menu" aria-expanded={menuOpen}>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+						</svg>
+					</button>
 				</nav>
 			</header>
-			{/* mobile nav links below header on small screens */}
-			<nav aria-label="Mobile navigation" className="sm:hidden page flex gap-5 pb-3 text-base border-b border-stone-100">
-				<Link className="no-underline hover:underline" href="/">Work</Link>
-				<Link className="no-underline hover:underline" href="/about">About</Link>
-				<a className="no-underline hover:underline" href="https://jackzif.dev">dev page</a>
-			</nav>
+			{/* Mobile dropdown menu */}
+			{menuOpen && (
+				<nav aria-label="Mobile navigation" className="sm:hidden page flex flex-col gap-3 pb-3 text-base border-b border-stone-300 bg-white">
+					<Link className="no-underline hover:underline" href="/">Work</Link>
+					<Link className="no-underline hover:underline" href="/about">About</Link>
+					<a className="no-underline hover:underline" href="https://jackzif.dev">dev page</a>
+					<button onClick={() => { setOpen(true); setMenuOpen(false); }} className="text-red-600 hover:text-red-700 bg-transparent border-0 text-left py-1" style={{textTransform:'uppercase'}}>LOGIN</button>
+				</nav>
+			)}
 			<LoginDialog open={open} onClose={() => setOpen(false)} />
 		</>
 	);
