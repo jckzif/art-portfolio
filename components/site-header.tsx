@@ -75,7 +75,7 @@ export function SiteHeader() {
 					<a className="no-underline hover:underline hidden sm:inline" href="https://jackzif.dev">dev page</a>
 					<button
 						onClick={toggle}
-						className="border border-black dark:border-white hover:opacity-70 bg-transparent p-1 hidden sm:block text-lg"
+						className="hover:opacity-70 bg-transparent p-1 hidden sm:block text-lg"
 						aria-label="Toggle theme"
 						title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
 					>
