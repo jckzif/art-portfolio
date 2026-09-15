@@ -55,12 +55,12 @@ export function SiteHeader() {
 	return (
 		<>
 			<header className="page flex items-center justify-between py-3 sm:py-5 text-sm sm:text-lg">
-				<div className="flex-1 min-w-0 mr-4">
-					<Link className="text-lg sm:text-xl leading-none no-underline block whitespace-nowrap truncate" href="/">
+				<div className="flex-1 min-w-0 mr-4 flex items-center gap-1">
+					<Link className="text-lg sm:text-xl leading-none no-underline block whitespace-nowrap" href="/">
 						jacks art portfolio <span className="text-zinc-500 hidden sm:inline">/ {section}{pageTitle ? ` / ${pageTitle}` : ''}</span>
 					</Link>
 					{pageTitle && pageDesc && (
-						<div className="hidden sm:flex items-center gap-1 mt-1">
+						<div className="hidden sm:flex items-center gap-1 shrink-0">
 							<ProjectInfoButton
 								title={pageTitle}
 								date={formatProjectDate(pageDate)}
@@ -75,7 +75,7 @@ export function SiteHeader() {
 					<a className="no-underline hover:underline hidden sm:inline" href="https://jackzif.dev">dev page</a>
 					<button
 						onClick={toggle}
-						className="text-black dark:text-white hover:opacity-70 bg-transparent border-0 p-1 hidden sm:block"
+						className="border border-black dark:border-white hover:opacity-70 bg-transparent p-1 hidden sm:block"
 						aria-label="Toggle theme"
 						title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
 					>
