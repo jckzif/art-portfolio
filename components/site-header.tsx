@@ -4,7 +4,6 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { LoginDialog } from './login-dialog';
 import { ProjectInfoButton } from './project-info-button';
-import { useTheme } from './theme-provider';
 
 function formatProjectDate(date: string | null) {
 	if (!date) return '';
@@ -19,7 +18,6 @@ export function SiteHeader() {
 	const [pageTitle, setPageTitle] = useState('');
 	const [pageDesc, setPageDesc] = useState('');
 	const [pageDate, setPageDate] = useState('');
-	const { theme, toggle } = useTheme();
 
 	const section = pathname === '/about' ? 'About' : 'Work';
 
@@ -73,17 +71,9 @@ export function SiteHeader() {
 					<Link className="no-underline hover:underline hidden sm:inline" href="/">Work</Link>
 					<Link className="no-underline hover:underline hidden sm:inline" href="/about">About</Link>
 					<a className="no-underline hover:underline hidden sm:inline" href="https://jackzif.dev">dev page</a>
-					<button
-						onClick={toggle}
-						className="hover:opacity-70 bg-transparent p-1 hidden sm:block text-lg"
-						aria-label="Toggle theme"
-						title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-					>
-						{theme === 'light' ? '🌙' : '☀️'}
-					</button>
 					<button onClick={() => setOpen(true)} className="text-red-600 hover:text-red-700 bg-transparent border-0 px-1 py-1 hidden sm:block" style={{textTransform:'uppercase'}}>LOGIN</button>
 					{/* Mobile menu button */}
-					<button onClick={() => setMenuOpen(!menuOpen)} className="sm:hidden text-black dark:text-white bg-transparent border-0 p-2" aria-label="Menu" aria-expanded={menuOpen}>
+					<button onClick={() => setMenuOpen(!menuOpen)} className="sm:hidden text-black bg-transparent border-0 p-2" aria-label="Menu" aria-expanded={menuOpen}>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
 						</svg>
@@ -92,16 +82,11 @@ export function SiteHeader() {
 			</header>
 			{/* Mobile dropdown menu */}
 			{menuOpen && (
-				<nav aria-label="Mobile navigation" className="sm:hidden page flex flex-col gap-3 pb-3 text-base border-b border-stone-300 dark:border-stone-700 bg-white dark:bg-slate-950">
+				<nav aria-label="Mobile navigation" className="sm:hidden page flex flex-col gap-3 pb-3 text-base border-b border-stone-300 bg-white">
 					<Link className="no-underline hover:underline" href="/">Work</Link>
 					<Link className="no-underline hover:underline" href="/about">About</Link>
 					<a className="no-underline hover:underline" href="https://jackzif.dev">dev page</a>
-					<button
-						onClick={() => { toggle(); }}
-						className="text-black dark:text-white hover:opacity-70 bg-transparent border-0 text-left py-1 flex items-center gap-2"
-					>
-						{theme === 'light' ? '🌙 dark mode' : '☀️ light mode'}
-					</button>
+
 					<button onClick={() => { setOpen(true); setMenuOpen(false); }} className="text-red-600 hover:text-red-700 bg-transparent border-0 text-left py-1" style={{textTransform:'uppercase'}}>LOGIN</button>
 				</nav>
 			)}

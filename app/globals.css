@@ -5,21 +5,16 @@
 @tailwind utilities;
 
 :root { color-scheme: light; }
-html[data-theme='dark'] { color-scheme: dark; }
 * { box-sizing: border-box; }
 body { @apply bg-white text-black antialiased; font-family: 'Jersey 10', Arial, sans-serif; letter-spacing: .015em; text-transform: lowercase; }
-html[data-theme='dark'] body { @apply bg-slate-950 text-white; }
 a { @apply underline-offset-4; }
 button, input, textarea { font: inherit; }
 button { @apply cursor-pointer; }
 :focus-visible { @apply outline outline-2 outline-offset-4 outline-black; }
-html[data-theme='dark'] :focus-visible { @apply outline-white; }
 .display { font-family: 'Jersey 10', Arial, sans-serif; letter-spacing: .015em; }
 .page { @apply mx-auto w-full max-w-[1680px] px-4 sm:px-7 lg:px-10; }
 .portfolio-screen { overflow: auto; }
 @media (max-width: 639px) { body:has(.portfolio-screen) { overflow: auto; } }
 @media (min-width: 640px) { .portfolio-screen { height: calc(100dvh - 72px); overflow: hidden; } }
 input:not([type='checkbox']):not([type='radio']), textarea { @apply rounded-none border-black bg-white text-black; }
-html[data-theme='dark'] input:not([type='checkbox']):not([type='radio']),
-html[data-theme='dark'] textarea { @apply border-white bg-slate-900 text-white; }
 @media (prefers-reduced-motion: no-preference) { .gentle { transition: opacity .2s ease, transform .2s ease; } }
