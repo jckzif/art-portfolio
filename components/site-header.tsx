@@ -75,20 +75,11 @@ export function SiteHeader() {
 					<a className="no-underline hover:underline hidden sm:inline" href="https://jackzif.dev">dev page</a>
 					<button
 						onClick={toggle}
-						className="border border-black dark:border-white hover:opacity-70 bg-transparent p-1 hidden sm:block"
+						className="border border-black dark:border-white hover:opacity-70 bg-transparent p-1 hidden sm:block text-lg"
 						aria-label="Toggle theme"
 						title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
 					>
-						{theme === 'light' ? (
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 6.75V9m6-3v6m1.06 5.25l1.414 1.414M7.5 19.5L9 21m7.07-15.07l1.414-1.414M16.5 4.5L18 3" />
-							</svg>
-						) : (
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-							</svg>
-						)}
+						{theme === 'light' ? '🌙' : '☀️'}
 					</button>
 					<button onClick={() => setOpen(true)} className="text-red-600 hover:text-red-700 bg-transparent border-0 px-1 py-1 hidden sm:block" style={{textTransform:'uppercase'}}>LOGIN</button>
 					{/* Mobile menu button */}
@@ -109,22 +100,7 @@ export function SiteHeader() {
 						onClick={() => { toggle(); }}
 						className="text-black dark:text-white hover:opacity-70 bg-transparent border-0 text-left py-1 flex items-center gap-2"
 					>
-						{theme === 'light' ? (
-							<>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 6.75V9m6-3v6m1.06 5.25l1.414 1.414M7.5 19.5L9 21m7.07-15.07l1.414-1.414M16.5 4.5L18 3" />
-								</svg>
-								dark mode
-							</>
-						) : (
-							<>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-								</svg>
-								light mode
-							</>
-						)}
+						{theme === 'light' ? '🌙 dark mode' : '☀️ light mode'}
 					</button>
 					<button onClick={() => { setOpen(true); setMenuOpen(false); }} className="text-red-600 hover:text-red-700 bg-transparent border-0 text-left py-1" style={{textTransform:'uppercase'}}>LOGIN</button>
 				</nav>

@@ -51,7 +51,7 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
   return (
     <section aria-label="Artwork viewer" className="mt-4">
       <div
-        className="relative flex h-[calc(100dvh-160px)] sm:h-[calc(100dvh-220px)] min-h-[240px] items-center justify-center bg-white pt-3 sm:pt-8 overflow-hidden"
+        className="relative flex h-[calc(100dvh-160px)] sm:h-[calc(100dvh-220px)] min-h-[240px] items-center justify-center bg-white dark:bg-slate-950 pt-3 sm:pt-8 overflow-hidden"
         onTouchStart={e => {
           startRef.current = e.changedTouches[0].screenX;
           setOffset(0);
@@ -71,7 +71,7 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
         <button
           aria-label="Previous artwork"
           onClick={() => move(-1)}
-          className="absolute left-4 sm:left-6 z-10 text-black p-2"
+          className="absolute left-4 sm:left-6 z-10 text-black dark:text-white p-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-6 w-6">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -102,7 +102,7 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
         <button
           aria-label="Next artwork"
           onClick={() => move(1)}
-          className="absolute right-4 sm:right-6 z-10 text-black p-2"
+          className="absolute right-4 sm:right-6 z-10 text-black dark:text-white p-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-6 w-6">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
