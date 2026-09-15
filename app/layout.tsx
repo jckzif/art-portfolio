@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'; import { Suspense } from 'react'; import './globals.css'; import { SiteHeader } from '@/components/site-header'; import { DynamicFavicon } from '@/components/dynamic-favicon'; import { getAboutContent } from '@/lib/data';
 function siteUrl() {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL || 'https://jackzif.art';
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || 'https://jackzif.art';
   // ensure the value always has a scheme so new URL() doesn't throw
   return raw.startsWith('http') ? raw : `https://${raw}`;
 }
