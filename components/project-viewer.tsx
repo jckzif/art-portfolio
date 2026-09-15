@@ -51,7 +51,7 @@ export function ProjectViewer({ images, title }: { images: ProjectImage[]; title
   return (
     <section aria-label="Artwork viewer" className="mt-4">
       <div
-        className="relative flex h-[calc(100dvh-160px)] sm:h-[calc(100dvh-220px)] min-h-[240px] items-center justify-center bg-white dark:bg-slate-950 pt-3 sm:pt-8 overflow-hidden"
+        className="relative flex h-[calc(100dvh-160px)] sm:h-[calc(100dvh-220px)] min-h-[240px] items-center justify-center bg-white pt-3 sm:pt-8 overflow-hidden"
         onTouchStart={e => {
           startRef.current = e.changedTouches[0].screenX;
           setOffset(0);
