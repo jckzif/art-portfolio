@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 
 const ASCII_ART = String.raw`
-                                                                                                                   
-                                                                                                                
-                                                                                                                
-                                                                                                                
-                                                                                                                
-                                                                                                                
+                                                                                                 
+                                                                                                 
+                                                                                                 
+                                                                                                 
+                                                                                                 
+                                                                                                 
                                                                 :   .                                           
                                                               &    X                                            
                                                   &      .  :  ; $ . . .                                        
@@ -82,8 +82,6 @@ const ASCII_ART = String.raw`
        . . ..                               .         .  &     :           :  .x         .  .                   
         .. +                      +    .                                                      .                 
                                                                                                                 
-
-       jackzif.art
 `;
 
 export async function GET() {
