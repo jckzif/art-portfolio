@@ -10,7 +10,7 @@ function formatProjectDate(date: string | null) {
 	return new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long' }).format(new Date(`${date}T12:00:00`));
 }
 
-export function SiteHeader() {
+export function SiteHeader({ notebookSlug }: { notebookSlug?: string }) {
 	const params = useSearchParams();
 	const pathname = usePathname();
 	const [open, setOpen] = useState(params.get('login') === '1');
@@ -69,7 +69,9 @@ export function SiteHeader() {
 				</div>
 				<nav aria-label="Main navigation" className="flex items-center gap-4 shrink-0">
 					<Link className="no-underline hover:underline hidden sm:inline" href="/">Work</Link>
-					<Link className="no-underline hover:underline hidden sm:inline" href="/#notebook">Notebook</Link>
+					{notebookSlug ? (
+						<Link className="no-underline hover:underline hidden sm:inline" href={`/projects/${notebookSlug}`}>Notebook</Link>
+					) : null}
 					<Link className="no-underline hover:underline hidden sm:inline" href="/about">About</Link>
 					<a className="no-underline hover:underline hidden sm:inline" href="https://jackzif.dev">dev page</a>
 					<button onClick={() => setOpen(true)} className="text-red-600 hover:text-red-700 bg-transparent border-0 px-1 py-1 hidden sm:block" style={{textTransform:'uppercase'}}>LOGIN</button>
@@ -85,7 +87,9 @@ export function SiteHeader() {
 			{menuOpen && (
 				<nav aria-label="Mobile navigation" className="sm:hidden page flex flex-col gap-3 pb-3 text-base border-b border-stone-300 bg-white">
 					<Link className="no-underline hover:underline" href="/">Work</Link>
-					<Link className="no-underline hover:underline" href="/#notebook">Notebook</Link>
+					{notebookSlug ? (
+						<Link className="no-underline hover:underline" href={`/projects/${notebookSlug}`}>Notebook</Link>
+					) : null}
 					<Link className="no-underline hover:underline" href="/about">About</Link>
 					<a className="no-underline hover:underline" href="https://jackzif.dev">dev page</a>
 

@@ -7,9 +7,7 @@ export const revalidate = 60;
 
 export default async function Home() {
   const projects = await getPublishedProjects();
-  const notebook = projects.find(p => p.is_notebook);
   const regularProjects = projects.filter(p => !p.is_notebook);
-  const workProjects = notebook ? [notebook, ...regularProjects] : regularProjects;
   const visitCount = await getAndIncrementVisitCount();
   const totalImages = await getTotalImageCount();
 
@@ -33,23 +31,17 @@ export default async function Home() {
         <div>{totalImages} piece{totalImages !== 1 ? 's' : ''}</div>
         <div>{visitCount} visit{visitCount !== 1 ? 's' : ''}</div>
       </div>
-      {workProjects.length === 0 ? (
+      {regularProjects.length === 0 ? (
         <div className="py-10 sm:py-20">
           <p className="text-2xl sm:text-3xl">No published work yet.</p>
           <p className="mt-2 text-base sm:text-lg">Your published projects will appear here.</p>
         </div>
       ) : (
         <div className="grid max-w-6xl grid-cols-1 gap-x-2 gap-y-4 sm:gap-x-5 sm:gap-y-10 pt-4 sm:pt-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {workProjects.map((project, index) => {
+          {regularProjects.map((project) => {
             const cover = project.project_images?.find(i => i.id === project.cover_image_id) || project.project_images?.[0];
-            const isNotebook = !!project.is_notebook;
             return (
-              <Link
-                key={project.id}
-                href={`/projects/${project.slug}`}
-                id={isNotebook ? 'notebook' : undefined}
-                className={isNotebook ? 'group block no-underline scroll-mt-24' : 'group block no-underline'}
-              >
+              <Link key={project.id} href={`/projects/${project.slug}`} className="group block no-underline">
                 <div className="relative aspect-video overflow-hidden bg-white">
                   {cover ? (
                     <Image
@@ -67,9 +59,6 @@ export default async function Home() {
                   <h2 className="text-xl leading-none">{project.title}</h2>
                   <time className="shrink-0 text-sm">{formatProjectDate(project.project_date)}</time>
                 </div>
-                {isNotebook && index === 0 && (
-                  <span className="mt-1 inline-block text-xs uppercase tracking-[0.18em] text-stone-500">Notebook</span>
-                )}
               </Link>
             );
           })}
