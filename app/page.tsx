@@ -33,7 +33,7 @@ export default async function Home() {
         <div>{visitCount} visit{visitCount !== 1 ? 's' : ''}</div>
       </div>
       {notebook && (
-        <div className="border-b border-stone-300 bg-white">
+        <div id="notebook" className="border-b border-stone-300 bg-white scroll-mt-24">
           <div className="page flex items-center py-2 sm:py-4">
             <Link href={`/projects/${notebook.slug}`} className="text-base sm:text-lg font-medium no-underline hover:underline">
               {notebook.title}
